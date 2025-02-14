@@ -22,8 +22,30 @@ public class Driver {
     	  ******************************************************************************************************************************************/
         
     	Network objNetwork = new Network("network");            /* Activate the network */
-        objNetwork.start();
         Server objServer = new Server();        
+        Client receiveClient = new Client("receiving");
+        Client sendClient = new Client("sending");
+        
+        Thread networkThread = new Thread(objNetwork);
+        Thread serverThread = new Thread(objServer);
+        Thread receiveThread = new Thread(receiveClient);
+        Thread sendThread = new Thread(sendClient);
+
+        networkThread.start();
+        serverThread.start();
+        receiveThread.start();
+        sendThread.start();
+
+        try {
+            receiveThread.join();
+            sendThread.join();
+            networkThread.join();
+            serverThread.join();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        
         /* Complete here the code for the main method ...*/
     }
 }

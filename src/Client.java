@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
  * @author Kerly Titus
  */
 
-public class Client { 
+public class Client implements Runnable { 
     
     private static int numberOfTransactions;   		/* Number of transactions to process */
     private static int maxNbTransactions;      		/* Maximum number of transactions */
@@ -112,7 +112,7 @@ public class Client {
         
         try
         {
-        	inputStream = new Scanner(new FileInputStream("transaction.txt"));
+        	inputStream = new Scanner(new FileInputStream("src\\transaction.txt"));
         }
         catch(FileNotFoundException e)
         {
@@ -157,11 +157,13 @@ public class Client {
          
          while (i < getNumberOfTransactions())
          {  
-            // while( objNetwork.getInBufferStatus().equals("full") );     /* Alternatively, busy-wait until the network input buffer is available */
+             while( objNetwork.getInBufferStatus().equals("full") ) {
+                Thread.yield();
+             }
                                              	
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
            
-            System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
+            // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
             
             objNetwork.send(transaction[i]);                            /* Transmit current transaction */
             i++;
@@ -181,7 +183,10 @@ public class Client {
          
          while (i < getNumberOfTransactions())
          {     
-        	 // while( objNetwork.getOutBufferStatus().equals("empty"));  	/* Alternatively, busy-wait until the network output buffer is available */
+             /* Alternatively, busy-wait until the network output buffer is available */
+        	 while( objNetwork.getOutBufferStatus().equals("empty")) {
+                Thread.yield();
+             }
                                                                         	
             objNetwork.receive(transact);                               	/* Receive updated transaction from the network buffer */
             
@@ -189,7 +194,7 @@ public class Client {
             
             System.out.println(transact);                               	/* Display updated transaction */    
             i++;
-         } 
+         }
     }
      
     /** 
@@ -212,7 +217,41 @@ public class Client {
     {   
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
+        Boolean sendFlag = true;
+        Boolean receiveFlag = true;
     
+        if (getClientOperation().equals("sending")) {
+
+
+            sendClientStartTime = System.currentTimeMillis();
+
+            sendTransactions();
+
+            sendClientEndTime = System.currentTimeMillis();
+            sendFlag = false;
+            
+            // if (objNetwork.getOutBufferStatus().equals("empty")) {
+            //     objNetwork.disconnect(objNetwork.getClientIP());
+            // }
+
+            System.out.println("\nTerminating client sending thread - " + " Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
+
+        }
+        
+        else if (getClientOperation().equals("receiving")) {
+
+            receiveClientStartTime = System.currentTimeMillis();
+
+            receiveTransactions(transact);
+
+            receiveClientEndTime = System.currentTimeMillis();
+            receiveFlag = false;
+
+            System.out.println("\nTerminating client receiving thread - " + " Running time " + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
+            objNetwork.disconnect(objNetwork.getClientIP());
+
+        }
+
     	/* Implement here the code for the run method ... */
     }
 }
