@@ -1,0 +1,4 @@
+Answers
+
+Changing the number of packets from 10 to 20 not change the run time of the program. A possible explanation for this is that the time it takes to fill or empty the buffer is not the process that takes the most amount of time. It is likely the time it takes for the CPU to perform computations on the given data that takes more time than transferring packets in and out of the buffer. Essentially, when the buffer size is already large enough to handle the data transfers, increasing its size wont change anything.
+

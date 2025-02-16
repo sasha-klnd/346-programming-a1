@@ -1,8 +1,11 @@
 
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -312,6 +315,7 @@ public class Server implements Runnable {
         Transactions trans = new Transactions();
         long serverStartTime, serverEndTime;
 
+
         //System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
 
         serverStartTime = System.currentTimeMillis();
@@ -322,6 +326,7 @@ public class Server implements Runnable {
 
         System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime - serverStartTime)
         + " milliseconds");
+        
         objNetwork.disconnect(objNetwork.getServerIP());
     }
 }
