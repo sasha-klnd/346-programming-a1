@@ -42,7 +42,7 @@ public class Network implements Runnable {
             clientConnectionStatus = "idle";
             serverConnectionStatus = "idle";
             portID = 0;
-            maxNbPackets = 10;
+            maxNbPackets = 20;
             inComingPacket = new Transactions[maxNbPackets];
             outGoingPacket = new Transactions[maxNbPackets];
             for (i=0; i < maxNbPackets; i++)
