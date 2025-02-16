@@ -27,7 +27,7 @@ public class Server implements Runnable {
 
     /**
      * Constructor method of Client class
-     * 
+     *
      * @return
      * @param
      */
@@ -50,7 +50,7 @@ public class Server implements Runnable {
 
     /**
      * Accessor method of Server class
-     * 
+     *
      * @return numberOfTransactions
      * @param
      */
@@ -60,7 +60,7 @@ public class Server implements Runnable {
 
     /**
      * Mutator method of Server class
-     * 
+     *
      * @return
      * @param nbOfTrans
      */
@@ -70,7 +70,7 @@ public class Server implements Runnable {
 
     /**
      * Accessor method of Server class
-     * 
+     *
      * @return numberOfAccounts
      * @param
      */
@@ -80,7 +80,7 @@ public class Server implements Runnable {
 
     /**
      * Mutator method of Server class
-     * 
+     *
      * @return
      * @param nbOfAcc
      */
@@ -90,7 +90,7 @@ public class Server implements Runnable {
 
     /**
      * Accessor method of Server class
-     * 
+     *
      * @return maxNbAccounts
      * @param
      */
@@ -100,7 +100,7 @@ public class Server implements Runnable {
 
     /**
      * Mutator method of Server class
-     * 
+     *
      * @return
      * @param nbOfAcc
      */
@@ -110,7 +110,7 @@ public class Server implements Runnable {
 
     /**
      * Initialization of the accounts from an input file
-     * 
+     *
      * @return
      * @param
      */
@@ -119,7 +119,7 @@ public class Server implements Runnable {
         int i = 0; /* index of accounts array */
 
         try {
-            inputStream = new Scanner(new FileInputStream("src\\account.txt"));
+            inputStream = new Scanner(new FileInputStream("src/account.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("File account.txt was not found");
             System.out.println("or could not be opened.");
@@ -141,14 +141,14 @@ public class Server implements Runnable {
         }
         setNumberOfAccounts(i); /* Record the number of accounts processed */
 
-        System.out.println("\n DEBUG : Server.initializeAccounts() " + getNumberOfAccounts() + " accounts processed");
+        //System.out.println("\n DEBUG : Server.initializeAccounts() " + getNumberOfAccounts() + " accounts processed");
 
         inputStream.close();
     }
 
     /**
      * Find and return the index position of an account
-     * 
+     *
      * @return account index position or -1
      * @param accNumber
      */
@@ -166,7 +166,7 @@ public class Server implements Runnable {
 
     /**
      * Processing of the transactions
-     * 
+     *
      * @return
      * @param trans
      */
@@ -247,7 +247,7 @@ public class Server implements Runnable {
 
     /**
      * Processing of a deposit operation in an account
-     * 
+     *
      * @return balance
      * @param i, amount
      */
@@ -261,7 +261,7 @@ public class Server implements Runnable {
 
     /**
      * Processing of a withdrawal operation in an account
-     * 
+     *
      * @return balance
      * @param i, amount
      */
@@ -275,7 +275,7 @@ public class Server implements Runnable {
 
     /**
      * Processing of a query operation in an account
-     * 
+     *
      * @return balance
      * @param i
      */
@@ -288,7 +288,7 @@ public class Server implements Runnable {
 
     /**
      * Create a String representation based on the Server Object
-     * 
+     *
      * @return String representation
      */
     public String toString() {
@@ -304,7 +304,7 @@ public class Server implements Runnable {
 
     /**
      * Code for the run method
-     * 
+     *
      * @return
      * @param
      */
@@ -312,7 +312,7 @@ public class Server implements Runnable {
         Transactions trans = new Transactions();
         long serverStartTime, serverEndTime;
 
-        System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
+        //System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
 
         serverStartTime = System.currentTimeMillis();
 

@@ -15,29 +15,29 @@ import java.util.InputMismatchException;
  * @author Kerly Titus
  */
 
-public class Client implements Runnable { 
-    
+public class Client implements Runnable {
+
     private static int numberOfTransactions;   		/* Number of transactions to process */
     private static int maxNbTransactions;      		/* Maximum number of transactions */
     private static Transactions [] transaction; 	/* Transactions to be processed */
     private static Network objNetwork;          	/* Client object to handle network operations */
     private String clientOperation;    				/* sending or receiving */
-    
+
 	/** Constructor method of Client class
- 	 * 
-     * @return 
+ 	 *
+     * @return
      * @param
      */
      Client(String operation)
-     { 
+     {
        if (operation.equals("sending"))
-       { 
+       {
            System.out.println("\n Initializing client sending application ...");
            numberOfTransactions = 0;
            maxNbTransactions = 100;
-           transaction = new Transactions[maxNbTransactions];  
+           transaction = new Transactions[maxNbTransactions];
            objNetwork = new Network("client");
-           clientOperation = operation; 
+           clientOperation = operation;
            System.out.println("\n Initializing the transactions ... ");
            readTransactions();
            System.out.println("\n Connecting client to network ...");
@@ -49,15 +49,15 @@ public class Client implements Runnable {
        	}
        else
     	   if (operation.equals("receiving"))
-           { 
+           {
     		   System.out.println("\n Initializing client receiving application ...");
-    		   clientOperation = operation; 
+    		   clientOperation = operation;
            }
      }
-           
-    /** 
+
+    /**
      * Accessor method of Client class
-     * 
+     *
      * @return numberOfTransactions
      * @param
      */
@@ -65,21 +65,21 @@ public class Client implements Runnable {
      {
          return numberOfTransactions;
      }
-         
-    /** 
+
+    /**
      * Mutator method of Client class
-     * 
-     * @return 
+     *
+     * @return
      * @param nbOfTrans
      */
      public void setNumberOfTransactions(int nbOfTrans)
-     { 
+     {
          numberOfTransactions = nbOfTrans;
      }
-         
-    /** 
+
+    /**
      * Accessor method of Client class
-     * 
+     *
      * @return clientOperation
      * @param
      */
@@ -87,32 +87,32 @@ public class Client implements Runnable {
      {
          return clientOperation;
      }
-         
-    /** 
+
+    /**
      * Mutator method of Client class
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 * @param operation
 	 */
 	 public void setClientOperation(String operation)
-	 { 
+	 {
 	     clientOperation = operation;
 	 }
-         
-    /** 
+
+    /**
      * Reading of the transactions from an input file
-     * 
-     * @return 
+     *
+     * @return
      * @param
      */
      public void readTransactions()
      {
         Scanner inputStream = null;     /* Transactions input file stream */
         int i = 0;                      /* Index of transactions array */
-        
+
         try
         {
-        	inputStream = new Scanner(new FileInputStream("src\\transaction.txt"));
+        	inputStream = new Scanner(new FileInputStream("src/transaction.txt"));
         }
         catch(FileNotFoundException e)
         {
@@ -135,91 +135,91 @@ public class Client implements Runnable {
                 System.out.println("Line " + i + "file transactions.txt invalid input");
                 System.exit(0);
             }
-            
+
         }
         setNumberOfTransactions(i);		/* Record the number of transactions processed */
-        
-        System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
-        
+
+        //System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
+
         inputStream.close( );
 
      }
-     
-    /** 
-     * Sending the transactions to the server 
-     * 
-     * @return 
+
+    /**
+     * Sending the transactions to the server
+     *
+     * @return
      * @param
      */
      public void sendTransactions()
      {
          int i = 0;     /* index of transaction array */
-         
+
          while (i < getNumberOfTransactions())
-         {  
+         {
              while( objNetwork.getInBufferStatus().equals("full") ) {
                 Thread.yield();
              }
-                                             	
+
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
-           
+
             // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
-            
+
             objNetwork.send(transaction[i]);                            /* Transmit current transaction */
             i++;
          }
-         
+
     }
-         
- 	/** 
+
+ 	/**
   	 * Receiving the completed transactions from the server
-     * 
-     * @return 
+     *
+     * @return
      * @param transact
      */
      public void receiveTransactions(Transactions transact)
      {
          int i = 0;     /* Index of transaction array */
-         
+
          while (i < getNumberOfTransactions())
-         {     
+         {
              /* Alternatively, busy-wait until the network output buffer is available */
         	 while( objNetwork.getOutBufferStatus().equals("empty")) {
                 Thread.yield();
              }
-                                                                        	
+
             objNetwork.receive(transact);                               	/* Receive updated transaction from the network buffer */
-            
-            System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber());
-            
-            System.out.println(transact);                               	/* Display updated transaction */    
+
+            //System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber());
+
+            System.out.println(transact);                               	/* Display updated transaction */
             i++;
          }
     }
-     
-    /** 
+
+    /**
      * Create a String representation based on the Client Object
-     * 
+     *
      * @return String representation
-     * @param 
+     * @param
      */
-     public String toString() 
+     public String toString()
      {
     	 return ("\n client IP " + objNetwork.getClientIP() + " Connection status" + objNetwork.getClientConnectionStatus() + "Number of transactions " + getNumberOfTransactions());
      }
-    
+
     /** Code for the run method
-     * 
-     * @return 
+     *
+     * @return
      * @param
      */
     public void run()
-    {   
+    {
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
         Boolean sendFlag = true;
         Boolean receiveFlag = true;
-    
+
         if (getClientOperation().equals("sending")) {
 
 
@@ -229,7 +229,7 @@ public class Client implements Runnable {
 
             sendClientEndTime = System.currentTimeMillis();
             sendFlag = false;
-            
+
             // if (objNetwork.getOutBufferStatus().equals("empty")) {
             //     objNetwork.disconnect(objNetwork.getClientIP());
             // }
@@ -237,7 +237,7 @@ public class Client implements Runnable {
             System.out.println("\nTerminating client sending thread - " + " Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
 
         }
-        
+
         else if (getClientOperation().equals("receiving")) {
 
             receiveClientStartTime = System.currentTimeMillis();
