@@ -38,7 +38,7 @@ public class Accounts {
      * @return accountNumber
      * @param
      */
-     public String getAccountNumber()
+    public String getAccountNumber()
      {
          return accountNumber;
      }
@@ -49,7 +49,7 @@ public class Accounts {
      * @return 
      * @param accNumber
      */
-     public void setAccountNumber(String accNumber)
+    public void setAccountNumber(String accNumber)
      { 
          accountNumber = accNumber;
      }  
@@ -60,7 +60,7 @@ public class Accounts {
      * @return accountType
      * @param
      */
-     public String getAccountType()
+    public String getAccountType()
      {
          return accountType;
      }
@@ -71,7 +71,7 @@ public class Accounts {
      * @return 
      * @param accType
      */
-     public void setAccountType(String accType)
+    public void setAccountType(String accType)
      { 
          accountType = accType;
      }  
@@ -82,7 +82,7 @@ public class Accounts {
      * @return firstName
      * @param
      */
-     public String getFirstName()
+    public String getFirstName()
      {
          return firstName;
      }
@@ -93,7 +93,7 @@ public class Accounts {
      * @return 
      * @param fName
      */
-     public void setFirstName(String fName)
+    public void setFirstName(String fName)
      { 
          firstName = fName;
      }  
@@ -104,7 +104,7 @@ public class Accounts {
      * @return lastName
      * @param
      */
-     public String getLastName()
+    public String getLastName()
      {
          return lastName;
      }
@@ -115,7 +115,7 @@ public class Accounts {
      * @return 
      * @param lName
      */
-     public void setLastName(String lName)
+    public void setLastName(String lName)
      { 
          lastName = lName;
      }           
@@ -126,7 +126,7 @@ public class Accounts {
      * @return balance
      * @param
      */
-     public double getBalance()
+    public double getBalance()
      {
          return balance;
      }
@@ -137,12 +137,12 @@ public class Accounts {
      * @return 
      * @param bal
      */
-     public void setBalance(double bal)
+    public void setBalance(double bal)
      { 
          balance = bal;
      }           
          
-   /** 
+    /** 
     * Create a String representation based on the Accounts Object
 	* 
 	* @return String representation
