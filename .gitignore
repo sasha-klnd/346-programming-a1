@@ -1,5 +1,6 @@
 # Project files
 *.pdf
+.vscode/
 
 # Compiled class file
 *.class
