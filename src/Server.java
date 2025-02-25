@@ -315,7 +315,6 @@ public class Server implements Runnable {
         Transactions trans = new Transactions();
         long serverStartTime, serverEndTime;
 
-
         //System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
 
         serverStartTime = System.currentTimeMillis();

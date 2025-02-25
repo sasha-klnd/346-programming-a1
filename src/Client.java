@@ -222,7 +222,6 @@ public class Client implements Runnable {
 
         if (getClientOperation().equals("sending")) {
 
-
             sendClientStartTime = System.currentTimeMillis();
 
             sendTransactions();

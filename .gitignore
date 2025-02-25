@@ -1,6 +1,7 @@
 # Project files
 *.pdf
 .vscode/
+.vscode/launch.json
 
 # Compiled class file
 *.class
