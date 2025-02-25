@@ -217,12 +217,41 @@ public class Client extends Thread {
      */
     public void run()
     {   
-    	Transactions transact = new Transactions();
+        Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-     
-        /*................................................................................................................................................................................................................*/
-              
-        System.out.println("\n Terminating client receiving thread - " + " Running time " +  (receiveClientEndTime - receiveClientStartTime));
+        Boolean sendFlag = true;
+        Boolean receiveFlag = true;
+
+        if (getClientOperation().equals("sending")) {
+
+            sendClientStartTime = System.currentTimeMillis();
+
+            sendTransactions();
+
+            sendClientEndTime = System.currentTimeMillis();
+            sendFlag = false;
+
+            // if (objNetwork.getOutBufferStatus().equals("empty")) {
+            //     objNetwork.disconnect(objNetwork.getClientIP());
+            // }
+
+            System.out.println("\nTerminating client sending thread - " + " Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
+
+        }
+
+        else if (getClientOperation().equals("receiving")) {
+
+            receiveClientStartTime = System.currentTimeMillis();
+
+            receiveTransactions(transact);
+
+            receiveClientEndTime = System.currentTimeMillis();
+            receiveFlag = false;
+
+            System.out.println("\nTerminating client receiving thread - " + " Running time " + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
+            Network.disconnect(Network.getClientIP());
+
+        }
     }
                 
 }
