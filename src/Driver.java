@@ -18,15 +18,27 @@ public class Driver {
      */
     public static void main(String[] args) {
         
-    	Network objNetwork = new Network( );            /* Activate the network */
-        objNetwork.start();
+    	Network objNetwork = new Network();            /* Activate the network */
+      Client objClient1 = new Client("sending");          /* Start the sending client thread */
+      Client objClient2 = new Client("receiving");        /* Start the receiving client thread */
+      Server objServer1 = new Server("1");
+      Server objServer2 = new Server("2");
+      
+      objNetwork.start();
+      objClient1.start();
+      objClient2.start();
+      objServer1.start();
+      objServer2.start();
 
-        Client objClient1 = new Client("sending");          /* Start the sending client thread */
-        objClient1.start();
-        Client objClient2 = new Client("receiving");        /* Start the receiving client thread */
-        objClient2.start();
-        
-      /*..............................................................................................................................................................*/
+      try {
+          objNetwork.join();
+          objClient1.join();
+          objClient2.join();
+          objServer1.join();
+          objServer2.join();
+      } catch (Exception e) {
+          System.out.println(e.getMessage());
+      }
        
     }
     
